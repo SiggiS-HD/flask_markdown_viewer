@@ -1,0 +1,107 @@
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 2rem;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    background: white;
+    padding: 2rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #0056b3;
+}
+
+form {
+    margin-bottom: 2rem;
+}
+
+select, button {
+    margin-top: 1rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+.markdown-content {
+    margin-top: 2rem;
+}
+
+pre {
+    background-color: #eef2f7;
+    padding: 1rem;
+    border-radius: 6px;
+    overflow-x: auto;
+}
+
+code {
+    background-color: #f2f2f2;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.95rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 1rem;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 0.75rem;
+    text-align: left;
+}
+
+th {
+    background-color: #eef2f7;
+    color: #0056b3;
+}
+blockquote {
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    border-left: 4px solid #60a5fa;
+    background-color: #f0f9ff;
+    color: #1e3a8a;
+    font-style: italic;
+  }
+
+/* Druckformatierung */
+@media print {
+    pre, code, th {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    body * {
+        visibility: hidden;
+    }
+    .markdown-content, .markdown-content * {
+        visibility: visible;
+    }
+    .markdown-content {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+
+    table, pre, h1, h2, h3, h4, h5, h6 {
+        page-break-inside: avoid;
+        break-inside: avoid;
+        page-break-after: auto;
+        break-after: auto;
+    }
+}

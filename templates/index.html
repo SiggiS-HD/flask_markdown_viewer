@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Markdown Viewer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Markdown Viewer</h1>
+
+        <form method="POST">
+            <label for="markdown_file">Wähle ein Dokument:</label>
+            <select name="markdown_file" id="markdown_file">
+                {% for file in files %}
+                    <option value="{{ file }}" {% if file == selected_file %}selected{% endif %}>{{ file }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Anzeigen</button>
+        </form>
+
+        <hr>
+
+        {% if html_content %}
+            <div class="markdown-content">
+                {{ html_content|safe }}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
