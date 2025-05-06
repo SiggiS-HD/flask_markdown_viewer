@@ -35,6 +35,13 @@ select, button {
     margin-top: 2rem;
 }
 
+.markdown-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1rem auto;
+}
+
 pre {
     background-color: #eef2f7;
     padding: 1rem;
@@ -98,6 +105,27 @@ blockquote {
         width: 100%;
     }
 
+    .markdown-content img {
+        page-break-inside: avoid;
+        break-inside: avoid;
+        max-width: 100%;
+        max-height: 90vh;
+        display: block;
+        margin: 1rem auto;
+    }
+    .print-image {
+        page-break-inside: avoid;
+        break-inside: avoid;
+        margin: 1rem auto;
+        text-align: center;
+    }
+  
+    .print-image img {
+        max-width: 100%;
+        max-height: 90vh;
+        height: auto;
+    }
+    
     table, pre, h1, h2, h3, h4, h5, h6 {
         page-break-inside: avoid;
         break-inside: avoid;

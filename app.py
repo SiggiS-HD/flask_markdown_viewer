@@ -2,6 +2,8 @@
 from flask import Flask, render_template, request
 import os
 from mathjax_markdown import markdown_to_html
+from flask import send_from_directory
+
 
 app = Flask(__name__)
 
@@ -23,6 +25,10 @@ def index():
                 html_content = markdown_to_html(md_text)
 
     return render_template('index.html', files=files, selected_file=selected_file, html_content=html_content)
+
+@app.route('/markdown/<path:filename>')
+def serve_markdown_file(filename):
+    return send_from_directory('markdown', filename)
 
 if __name__ == '__main__':
     app.run(debug=True)
