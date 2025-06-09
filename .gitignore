@@ -5,6 +5,7 @@ __pycache__/
 *.pyd
 *.log
 /*.db
+_PM2.txt
 venv/
 markdown/*
 !markdown/example_math.md
