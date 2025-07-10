@@ -68,14 +68,30 @@ python -m waitress --host=127.0.0.1 --port=5000 app:app
 
 ## 📄 Verwendung
 
-1. Lege Markdown-Dateien in den Ordner `markdown/`
+1. Lege Markdown-Dateien in Unterordner des Verzeichnisses `markdown/`
 2. Starte die App
 3. Rufe im Browser auf: [http://127.0.0.1:5000](http://127.0.0.1:5000)
-4. Wähle ein Dokument aus dem Dropdown und klicke auf „Anzeigen“
+4. Klicke in der Baumansicht auf ein Dokument, um es darzustellen
 5. Zur PDF-Erzeugung einfach:
    - `Strg + P` (Windows) oder `Cmd + P` (Mac)
    - Ziel: „Als PDF speichern“
    - „Hintergrundgrafiken drucken“ aktivieren (wichtig für Farben bei Code & Tabellen)
+
+---
+
+## 🌲 Neue Baumstruktur-Navigation (Tree View)
+
+Statt eines Dropdown-Menüs bietet die App jetzt eine komfortable Baumstruktur zur Navigation:
+
+- 📁 Verzeichnisse lassen sich durch Klick öffnen oder schließen
+- 📄 Dateien lassen sich direkt durch Klick darstellen – ein zusätzlicher Button ist nicht mehr nötig
+- Immer nur **ein Verzeichnis ist geöffnet** – beim Öffnen eines anderen wird das vorherige automatisch geschlossen
+- Der zuletzt gewählte Ordner bleibt geöffnet, wenn ein Dokument angezeigt wird
+
+🔹 **Wichtig:**  
+Markdown-Dokumente müssen in **Unterverzeichnissen des Ordners `markdown/`** liegen.  
+Dateien im Root-Verzeichnis `markdown/` werden **nicht** zur Auswahl angeboten.  
+→ Dies sorgt für eine bessere Übersicht bei wachsender Dokumentenzahl.
 
 ---
 

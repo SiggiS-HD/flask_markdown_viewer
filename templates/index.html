@@ -6,19 +6,72 @@
     <title>Markdown Viewer</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+    <style>
+        ul.tree, ul.tree ul {
+            list-style-type: none;
+            margin: 0;
+            padding-left: 1em;
+        }
+
+        ul.tree ul {
+            margin-left: 1em;
+            border-left: 1px dotted #ccc;
+        }
+
+        .folder {
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        .file {
+            cursor: pointer;
+            margin-left: 1em;
+        }
+
+        .file:hover {
+            text-decoration: underline;
+        }
+
+        .collapsed > ul {
+            display: none;
+        }
+
+        button {
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>Markdown Viewer</h1>
 
-        <form method="POST">
-            <label for="markdown_file">Wähle ein Dokument:</label>
-            <select name="markdown_file" id="markdown_file">
+        <form id="mdForm" method="POST">
+            <input type="hidden" name="markdown_file" id="markdown_file">
+
+            <ul class="tree" id="treeRoot">
+                {% set folders = {} %}
                 {% for file in files %}
-                    <option value="{{ file }}" {% if file == selected_file %}selected{% endif %}>{{ file }}</option>
+                    {% set parts = file.split('/') %}
+                    {% set folder = parts[:-1]|join('/') if parts|length > 1 else 'Root' %}
+                    {% set name = parts[-1] %}
+                    {% if folder not in folders %}
+                        {% set _ = folders.update({folder: []}) %}
+                    {% endif %}
+                    {% set _ = folders[folder].append({'name': name, 'path': file}) %}
                 {% endfor %}
-            </select>
-            <button type="submit">Anzeigen</button>
+
+                {% for folder, items in folders.items() %}
+                    {% set is_open = selected_file and selected_file.startswith(folder + '/') %}
+                    <li class="folder {{ '' if is_open else 'collapsed' }}" onclick="toggleExclusive(this)">📁 {{ folder }}
+                        <ul>
+                        {% for item in items %}
+                            <li class="file" onclick="event.stopPropagation(); autoSelectFile('{{ item.path }}')" {% if item.path == selected_file %}style="font-weight: bold;"{% endif %}>📄 {{ item.name }}</li>
+                        {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
         </form>
 
         <hr>
@@ -28,6 +81,35 @@
                 {{ html_content|safe }}
             </div>
         {% endif %}
+
+        <script>
+            function autoSelectFile(path) {
+                const form = document.getElementById('mdForm');
+                document.getElementById('markdown_file').value = path;
+
+                // öffne zugehörigen Ordner, schließe alle anderen
+                let folders = document.querySelectorAll(".folder");
+                folders.forEach(f => {
+                    const containsFile = f.querySelector(`[onclick*="'${path}'"]`);
+                    f.classList.add("collapsed");
+                    if (containsFile) {
+                        f.classList.remove("collapsed");
+                    }
+                });
+
+                form.submit();
+            }
+
+            function toggleExclusive(folderElement) {
+                const alreadyOpen = !folderElement.classList.contains("collapsed");
+                document.querySelectorAll(".folder").forEach(f => f.classList.add("collapsed"));
+                if (alreadyOpen) {
+                    folderElement.classList.add("collapsed");
+                } else {
+                    folderElement.classList.remove("collapsed");
+                }
+            }
+        </script>
     </div>
 </body>
 </html>
